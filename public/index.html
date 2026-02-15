@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <title>ហាងកាត់ដេរ - ទំហំអតិថិជន</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Battambang:wght@400;700;900&family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #7c3aed;
+            --success: #10b981;
+            --danger: #ef4444;
+            --dark: #1e293b;
+            --light: #f1f5f9;
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Kantumruy Pro', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            font-size: 17px;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        input, textarea, select {
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        /* Smooth scrolling for mobile */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Better touch targets for mobile */
+        button, a, .btn, .btn-action, .type-label {
+            min-height: 44px;
+            min-width: 44px;
+            touch-action: manipulation;
+        }
+
+        .header {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-family: 'Battambang', cursive;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.3rem;
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 450px 1fr;
+            gap: 2rem;
+        }
+
+        /* Stats */
+        .stats {
+            grid-column: 1 / -1;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.8rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Battambang', cursive;
+        }
+
+        .stat-label {
+            font-size: 1.1rem;
+            color: #64748b;
+            margin-top: 0.5rem;
+        }
+
+        /* Form Section */
+        .form-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        /* Make form sticky on desktop only */
+        @media (min-width: 1201px) {
+            .form-section {
+                position: sticky;
+                top: 2rem;
+            }
+        }
+
+        .form-title {
+            font-family: 'Battambang', cursive;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            display: none;
+            font-size: 1rem;
+        }
+
+        .alert.show {
+            display: block;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid var(--success);
+        }
+
+        .alert-error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid var(--danger);
+        }
+
+        .section-divider {
+            margin: 1.5rem 0;
+            padding: 0.9rem;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(124, 58, 237, 0.1));
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.2rem;
+            color: var(--primary);
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.3rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1.05rem;
+        }
+
+        .required {
+            color: var(--danger);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.85rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-family: 'Kantumruy Pro', sans-serif;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        /* Measurement Type Selection */
+        .type-selection {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .type-option {
+            position: relative;
+        }
+
+        .type-option input[type="radio"] {
+            display: none;
+        }
+
+        .type-label {
+            display: block;
+            padding: 1.1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            font-size: 1.05rem;
+            background: white;
+        }
+
+        .type-option input[type="radio"]:checked + .type-label {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .type-label:hover {
+            border-color: var(--primary);
+        }
+
+        /* Hide sections based on measurement type */
+        .upper-body-section,
+        .lower-body-section {
+            display: none;
+        }
+
+        .upper-body-section.show,
+        .lower-body-section.show {
+            display: block;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: var(--dark);
+            margin-top: 0.5rem;
+            width: 100%;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        /* Records Section */
+        .records-section {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .search-bar {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            display: flex;
+            gap: 1rem;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 0.9rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 1.05rem;
+            font-family: 'Kantumruy Pro', sans-serif;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .btn-export {
+            padding: 0.9rem 1.5rem;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Kantumruy Pro', sans-serif;
+            font-size: 1.05rem;
+        }
+
+        .btn-export:hover {
+            background: #059669;
+        }
+
+        /* Customer Cards */
+        .customers-grid {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .customer-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .customer-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border-bottom: 2px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .customer-name {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-family: 'Battambang', cursive;
+        }
+
+        .customer-phone {
+            font-size: 1.05rem;
+            color: #64748b;
+            margin-top: 0.3rem;
+        }
+
+        .gender-badge {
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .badge-male {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        .badge-female {
+            background: #fce7f3;
+            color: #9f1239;
+        }
+
+        .type-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
+        .badge-both {
+            background: #e0e7ff;
+            color: #3730a3;
+        }
+
+        .badge-upper {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .badge-lower {
+            background: #d1fae5;
+            color: #065f46;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .measurements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 1rem;
+        }
+
+        .measurement-item {
+            text-align: center;
+            padding: 1.1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .measurement-label {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 0.4rem;
+        }
+
+        .measurement-value {
+            font-size: 1.7rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-family: 'Battambang', cursive;
+        }
+
+        .card-actions {
+            padding: 1rem 1.5rem;
+            background: #f8fafc;
+            display: flex;
+            gap: 0.6rem;
+            justify-content: flex-end;
+        }
+
+        .btn-action {
+            padding: 0.7rem 1.4rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-family: 'Kantumruy Pro', sans-serif;
+            font-size: 1rem;
+        }
+
+        .btn-view {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #1d4ed8;
+        }
+
+        .btn-edit {
+            background: #fbbf24;
+            color: #78350f;
+        }
+
+        .btn-edit:hover {
+            background: #f59e0b;
+        }
+
+        .btn-delete {
+            background: var(--danger);
+            color: white;
+        }
+
+        .btn-delete:hover {
+            background: #dc2626;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 900px;
+            max-height: 85vh;
+            overflow-y: auto;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-family: 'Battambang', cursive;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+
+        .close-btn:hover {
+            background: rgba(255,255,255,0.3);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .detail-section {
+            margin-bottom: 2rem;
+        }
+
+        .detail-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e2e8f0;
+            font-family: 'Battambang', cursive;
+        }
+
+        .detail-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+
+        .detail-item {
+            background: #f8fafc;
+            padding: 1.2rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .detail-label {
+            font-size: 0.95rem;
+            color: #64748b;
+            margin-bottom: 0.4rem;
+        }
+
+        .detail-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            font-family: 'Battambang', cursive;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 12px;
+        }
+
+        .empty-icon {
+            font-size: 5rem;
+            margin-bottom: 1rem;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            background: white;
+            border-radius: 12px;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                font-size: 16px;
+                padding: 10px;
+            }
+
+            .header {
+                padding: 1.2rem 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+                margin-bottom: 0.3rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            /* Stats cards - 2x2 grid on mobile */
+            .stats {
+                gap: 0.8rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .stat-card {
+                padding: 1rem;
+            }
+
+            .stat-value {
+                font-size: 2rem;
+            }
+
+            .stat-label {
+                font-size: 0.85rem;
+                margin-top: 0.3rem;
+            }
+
+            /* Container */
+            .container {
+                gap: 1rem;
+            }
+
+            /* Form section - full width on mobile */
+            .form-section {
+                padding: 1.2rem;
+                border-radius: 12px;
+            }
+
+            .form-title {
+                font-size: 1.6rem;
+                margin-bottom: 1rem;
+            }
+
+            .alert {
+                padding: 0.8rem;
+                font-size: 0.9rem;
+                margin-bottom: 0.8rem;
+            }
+
+            .section-divider {
+                font-size: 1rem;
+                padding: 0.7rem;
+                margin: 1rem 0;
+            }
+
+            /* Form groups - stack on mobile */
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 0;
+            }
+
+            .form-group {
+                margin-bottom: 1rem;
+            }
+
+            .form-group label {
+                font-size: 0.95rem;
+                margin-bottom: 0.4rem;
+            }
+
+            .form-group input,
+            .form-group select,
+            .form-group textarea {
+                padding: 0.7rem;
+                font-size: 16px; /* Prevents iOS zoom */
+                border-radius: 6px;
+            }
+
+            /* Type selection - stack on mobile */
+            .type-selection {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+                margin-bottom: 1rem;
+            }
+
+            .type-label {
+                padding: 0.85rem;
+                font-size: 1rem;
+            }
+
+            /* Buttons */
+            .btn {
+                padding: 0.85rem 1.5rem;
+                font-size: 1rem;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+            }
+
+            /* Search bar - stack on mobile */
+            .search-bar {
+                flex-direction: column;
+                gap: 0.6rem;
+                padding: 0.8rem;
+            }
+
+            .search-input {
+                padding: 0.8rem;
+                font-size: 16px; /* Prevents iOS zoom */
+            }
+
+            .btn-export {
+                width: 100%;
+                padding: 0.8rem;
+            }
+
+            /* Customer cards */
+            .customer-card {
+                border-radius: 10px;
+            }
+
+            .card-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.6rem;
+                padding: 1rem;
+            }
+
+            .customer-name {
+                font-size: 1.3rem;
+            }
+
+            .customer-phone {
+                font-size: 0.9rem;
+            }
+
+            .gender-badge {
+                padding: 0.4rem 0.9rem;
+                font-size: 0.85rem;
+                align-self: flex-start;
+            }
+
+            .type-badge {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.8rem;
+            }
+
+            .card-body {
+                padding: 1rem;
+            }
+
+            /* Measurements - 2 columns on mobile */
+            .measurements-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 0.6rem;
+            }
+
+            .measurement-item {
+                padding: 0.7rem;
+            }
+
+            .measurement-label {
+                font-size: 0.75rem;
+                margin-bottom: 0.2rem;
+            }
+
+            .measurement-value {
+                font-size: 1.3rem;
+            }
+
+            /* Action buttons - 3 buttons per row on mobile */
+            .card-actions {
+                padding: 0.8rem 1rem;
+                gap: 0.5rem;
+                flex-wrap: wrap;
+            }
+
+            .btn-action {
+                padding: 0.6rem 0.8rem;
+                font-size: 0.85rem;
+                flex: 1;
+                min-width: calc(33.333% - 0.34rem);
+            }
+
+            /* Modal - full screen on mobile */
+            .modal-content {
+                width: 95%;
+                max-width: 95%;
+                max-height: 90vh;
+                border-radius: 12px;
+            }
+
+            .modal-header {
+                padding: 1.2rem;
+            }
+
+            .modal-title {
+                font-size: 1.5rem;
+            }
+
+            .close-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1.5rem;
+            }
+
+            .modal-body {
+                padding: 1.2rem;
+            }
+
+            .detail-section {
+                margin-bottom: 1.5rem;
+            }
+
+            .detail-title {
+                font-size: 1.2rem;
+                margin-bottom: 0.8rem;
+            }
+
+            /* Detail grid - 1 column on mobile */
+            .detail-grid {
+                grid-template-columns: 1fr;
+                gap: 0.6rem;
+            }
+
+            .detail-item {
+                padding: 0.9rem;
+            }
+
+            .detail-label {
+                font-size: 0.8rem;
+            }
+
+            .detail-value {
+                font-size: 1.2rem;
+            }
+
+            /* Empty state */
+            .empty-state {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .empty-icon {
+                font-size: 3.5rem;
+            }
+
+            .empty-state h3 {
+                font-size: 1.4rem !important;
+            }
+
+            .empty-state p {
+                font-size: 0.95rem !important;
+            }
+
+            .loading {
+                padding: 2rem;
+                font-size: 1rem;
+            }
+        }
+
+        /* Extra small phones */
+        @media (max-width: 400px) {
+            body {
+                font-size: 15px;
+                padding: 8px;
+            }
+
+            .header h1 {
+                font-size: 1.8rem;
+            }
+
+            .header p {
+                font-size: 0.9rem;
+            }
+
+            .stat-value {
+                font-size: 1.8rem;
+            }
+
+            .stat-label {
+                font-size: 0.8rem;
+            }
+
+            .form-section {
+                padding: 1rem;
+            }
+
+            .form-title {
+                font-size: 1.4rem;
+            }
+
+            .section-divider {
+                font-size: 0.9rem;
+                padding: 0.6rem;
+            }
+
+            .customer-name {
+                font-size: 1.2rem;
+            }
+
+            /* Measurements - 1 column on very small phones */
+            .measurements-grid {
+                grid-template-columns: 1fr;
+            }
+
+            /* Action buttons - 2 per row on very small phones */
+            .btn-action {
+                min-width: calc(50% - 0.25rem);
+            }
+
+            .modal-title {
+                font-size: 1.3rem;
+            }
+
+            .detail-value {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Landscape orientation on mobile */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .header {
+                padding: 0.8rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .header p {
+                font-size: 0.85rem;
+            }
+
+            .stats {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .stat-card {
+                padding: 0.6rem;
+            }
+
+            .stat-value {
+                font-size: 1.5rem;
+            }
+
+            .stat-label {
+                font-size: 0.75rem;
+            }
+
+            .form-section {
+                padding: 1rem;
+            }
+
+            .section-divider {
+                margin: 0.8rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🧵 ហាងកាត់ដេរ</h1>
+        <p>ប្រព័ន្ធគ្រប់គ្រងទំហំអតិថិជន</p>
+    </div>
+
+    <!-- Statistics -->
+    <div class="stats">
+        <div class="stat-card">
+            <div class="stat-value" id="totalCustomers">០</div>
+            <div class="stat-label">អតិថិជនសរុប</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="maleCustomers">០</div>
+            <div class="stat-label">ប្រុស</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="femaleCustomers">០</div>
+            <div class="stat-label">ស្រី</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-value" id="totalOrders">០</div>
+            <div class="stat-label">ការកម្ម៉ង់សរុប</div>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- Form Section -->
+        <div class="form-section">
+            <h2 class="form-title" id="formTitle">អតិថិជនថ្មី</h2>
+
+            <div id="alertBox" class="alert"></div>
+
+            <form id="customerForm">
+                <input type="hidden" id="customerId">
+
+                <div class="form-group">
+                    <label>ឈ្មោះអតិថិជន <span class="required">*</span></label>
+                    <input type="text" id="customerName" required placeholder="បញ្ចូលឈ្មោះពេញ">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>លេខទូរស័ព្ទ <span class="required">*</span></label>
+                        <input type="tel" id="phone" required placeholder="012 345 678">
+                    </div>
+                    <div class="form-group">
+                        <label>ភេទ <span class="required">*</span></label>
+                        <select id="gender" required>
+                            <option value="">ជ្រើសរើស</option>
+                            <option value="ប្រុស">ប្រុស</option>
+                            <option value="ស្រី">ស្រី</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="section-divider">ជ្រើសរើសប្រភេទទំហំ</div>
+
+                <div class="type-selection">
+                    <div class="type-option">
+                        <input type="radio" name="measurementType" id="typeBoth" value="both" checked>
+                        <label for="typeBoth" class="type-label">ទាំងពីរ</label>
+                    </div>
+                    <div class="type-option">
+                        <input type="radio" name="measurementType" id="typeUpper" value="upper">
+                        <label for="typeUpper" class="type-label">អាវ</label>
+                    </div>
+                    <div class="type-option">
+                        <input type="radio" name="measurementType" id="typeLower" value="lower">
+                        <label for="typeLower" class="type-label">ខោរ</label>
+                    </div>
+                </div>
+
+                <!-- Upper Body Section -->
+                <div class="upper-body-section show" id="upperBodySection">
+                    <div class="section-divider">ខ្នាតអាវ (សង់ទីម៉ែត្រ)</div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ទ្រូង</label>
+                            <input type="number" id="chest" step="0.5" placeholder="95">
+                        </div>
+                        <div class="form-group">
+                            <label>រាង</label>
+                            <input type="number" id="waist" step="0.5" placeholder="80">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ស្មា</label>
+                            <input type="number" id="shoulder" step="0.5" placeholder="45">
+                        </div>
+                        <div class="form-group">
+                            <label>សម្រុងដៃ</label>
+                            <input type="number" id="sleeveLength" step="0.5" placeholder="60">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>សម្រុងខ្លួន</label>
+                            <input type="number" id="neck" step="0.5" placeholder="38">
+                        </div>
+                        <div class="form-group">
+                            <label>ដៃអាវ</label>
+                            <input type="number" id="armhole" step="0.5" placeholder="45">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lower Body Section -->
+                <div class="lower-body-section show" id="lowerBodySection">
+                    <div class="section-divider">ខ្នាតខោរ (សង់ទីម៉ែត្រ)</div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>ចង្កេះ</label>
+                            <input type="number" id="hips" step="0.5" placeholder="95">
+                        </div>
+                        <div class="form-group">
+                            <label>ត្រគាក</label>
+                            <input type="number" id="inseam" step="0.5" placeholder="75">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>សម្រុង</label>
+                            <input type="number" id="thigh" step="0.5" placeholder="55">
+                        </div>
+                        <div class="form-group">
+                            <label>ទំហំជើង</label>
+                            <input type="number" id="knee" step="0.5" placeholder="38">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section-divider">កំណត់ចំណាំ</div>
+
+                <div class="form-group">
+                    <label>ចំណាំ</label>
+                    <textarea id="notes" rows="3" placeholder="ចំណាំពិសេស ឬចំណូលចិត្ត..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="submitBtn">រក្សាទុក</button>
+                <button type="button" class="btn btn-secondary" id="cancelBtn" style="display:none;">បោះបង់</button>
+            </form>
+        </div>
+
+        <!-- Records Section -->
+        <div class="records-section">
+            <div class="search-bar">
+                <input type="text" class="search-input" id="searchInput" placeholder="ស្វែងរកអតិថិជន...">
+                <button class="btn-export" onclick="exportData()">📥 នាំចេញទិន្នន័យ</button>
+            </div>
+
+            <div id="loadingIndicator" class="loading" style="display:none;">
+                កំពុងផ្ទុកទិន្នន័យ...
+            </div>
+
+            <div class="customers-grid" id="customersGrid">
+                <!-- Customer cards will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- View Details Modal -->
+    <div id="viewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">ព័ត៌មានលម្អិត</h2>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Details will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:3001/api';
+        let editingId = null;
+
+        // Handle measurement type selection
+        document.querySelectorAll('input[name="measurementType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const upperSection = document.getElementById('upperBodySection');
+                const lowerSection = document.getElementById('lowerBodySection');
+
+                if (this.value === 'both') {
+                    upperSection.classList.add('show');
+                    lowerSection.classList.add('show');
+                } else if (this.value === 'upper') {
+                    upperSection.classList.add('show');
+                    lowerSection.classList.remove('show');
+                    // Clear lower body values
+                    document.getElementById('hips').value = '';
+                    document.getElementById('inseam').value = '';
+                    document.getElementById('thigh').value = '';
+                    document.getElementById('knee').value = '';
+                } else if (this.value === 'lower') {
+                    upperSection.classList.remove('show');
+                    lowerSection.classList.add('show');
+                    // Clear upper body values
+                    document.getElementById('chest').value = '';
+                    document.getElementById('waist').value = '';
+                    document.getElementById('shoulder').value = '';
+                    document.getElementById('sleeveLength').value = '';
+                    document.getElementById('neck').value = '';
+                    document.getElementById('armhole').value = '';
+                }
+            });
+        });
+
+        // Convert numbers to Khmer
+        function toKhmerNumber(num) {
+            const khmerDigits = ['០', '១', '២', '៣', '៤', '៥', '៦', '៧', '៨', '៩'];
+            return String(num).split('').map(d => khmerDigits[parseInt(d)] || d).join('');
+        }
+
+        function showAlert(message, type = 'success') {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.textContent = message;
+            alertBox.className = `alert alert-${type} show`;
+            
+            setTimeout(() => {
+                alertBox.classList.remove('show');
+            }, 5000);
+        }
+
+        async function fetchCustomers(searchTerm = '') {
+            document.getElementById('loadingIndicator').style.display = 'block';
+            
+            try {
+                const url = searchTerm 
+                    ? `${API_URL}/customers?search=${encodeURIComponent(searchTerm)}`
+                    : `${API_URL}/customers`;
+                    
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error('Failed to fetch customers');
+                }
+                
+                const customers = await response.json();
+                renderCustomers(customers);
+                fetchStats();
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('មានបញ្ហាក្នុងការផ្ទុកទិន្នន័យ', 'error');
+            } finally {
+                document.getElementById('loadingIndicator').style.display = 'none';
+            }
+        }
+
+        async function fetchStats() {
+            try {
+                const response = await fetch(`${API_URL}/stats`);
+                const stats = await response.json();
+                
+                document.getElementById('totalCustomers').textContent = toKhmerNumber(stats.totalCustomers || 0);
+                document.getElementById('maleCustomers').textContent = toKhmerNumber(stats.maleCustomers || 0);
+                document.getElementById('femaleCustomers').textContent = toKhmerNumber(stats.femaleCustomers || 0);
+                document.getElementById('totalOrders').textContent = toKhmerNumber(stats.totalOrders || 0);
+            } catch (error) {
+                console.error('Error fetching stats:', error);
+            }
+        }
+
+        function getMeasurementTypeBadge(type) {
+            const badges = {
+                'both': '<span class="type-badge badge-both">ទាំងពីរ</span>',
+                'upper': '<span class="type-badge badge-upper">ខ្នងលើ</span>',
+                'lower': '<span class="type-badge badge-lower">ខ្នងក្រោម</span>'
+            };
+            return badges[type] || badges['both'];
+        }
+
+        function renderCustomers(customers) {
+            const grid = document.getElementById('customersGrid');
+            
+            if (customers.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">👔</div>
+                        <h3 style="font-family: 'Battambang', cursive; font-size: 1.8rem; margin-bottom: 0.5rem;">មិនទាន់មានអតិថិជន</h3>
+                        <p style="font-size: 1.1rem;">សូមបន្ថែមអតិថិជនថ្មីដំបូង</p>
+                    </div>
+                `;
+                return;
+            }
+
+            grid.innerHTML = customers.map(customer => {
+                let measurements = [];
+                
+                // Detect actual measurement type based on what data exists
+                let actualType = customer.measurementType || 'both';
+                
+                // Check if customer has upper body measurements
+                const hasUpper = customer.chest || customer.waist || customer.shoulder || 
+                                customer.sleeveLength || customer.neck || customer.armhole;
+                
+                // Check if customer has lower body measurements
+                const hasLower = customer.hips || customer.inseam || customer.thigh || customer.knee;
+                
+                // Determine actual type based on data
+                if (hasUpper && hasLower) {
+                    actualType = 'both';
+                } else if (hasUpper && !hasLower) {
+                    actualType = 'upper';
+                } else if (!hasUpper && hasLower) {
+                    actualType = 'lower';
+                }
+                
+                // Add upper body measurements
+                if (hasUpper) {
+                    if (customer.chest) measurements.push({ label: 'ទ្រូង', value: customer.chest });
+                    if (customer.waist) measurements.push({ label: 'រាង', value: customer.waist });
+                    if (customer.shoulder) measurements.push({ label: 'ស្មា', value: customer.shoulder });
+                    if (customer.sleeveLength) measurements.push({ label: 'សម្រុងដៃ', value: customer.sleeveLength });
+                    if (customer.neck) measurements.push({ label: 'សម្រុងខ្លួន', value: customer.neck });
+                    if (customer.armhole) measurements.push({ label: 'ដៃអាវ', value: customer.armhole });
+                }
+                
+                // Add lower body measurements
+                if (hasLower) {
+                    if (customer.hips) measurements.push({ label: 'ចង្កេះ', value: customer.hips });
+                    if (customer.inseam) measurements.push({ label: 'ត្រគាក', value: customer.inseam });
+                    if (customer.thigh) measurements.push({ label: 'សម្រុង', value: customer.thigh });
+                    if (customer.knee) measurements.push({ label: 'ទំហំជើង', value: customer.knee });
+                }
+
+                return `
+                    <div class="customer-card">
+                        <div class="card-header">
+                            <div>
+                                <div class="customer-name">${customer.customerName}</div>
+                                <div class="customer-phone">📞 ${customer.phone}</div>
+                                ${getMeasurementTypeBadge(actualType)}
+                            </div>
+                            <span class="gender-badge ${customer.gender === 'ប្រុស' ? 'badge-male' : 'badge-female'}">
+                                ${customer.gender}
+                            </span>
+                        </div>
+                        <div class="card-body">
+                            <div class="measurements-grid">
+                                ${measurements.map(m => `
+                                    <div class="measurement-item">
+                                        <div class="measurement-label">${m.label}</div>
+                                        <div class="measurement-value">${m.value}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-action btn-view" onclick="viewCustomer(${customer.id})">មើល</button>
+                            <button class="btn-action btn-edit" onclick="editCustomer(${customer.id})">កែសម្រួល</button>
+                            <button class="btn-action btn-delete" onclick="deleteCustomer(${customer.id})">លុប</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Form submission
+        document.getElementById('customerForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const measurementType = document.querySelector('input[name="measurementType"]:checked').value;
+            
+            const customer = {
+                customerName: document.getElementById('customerName').value,
+                phone: document.getElementById('phone').value,
+                gender: document.getElementById('gender').value,
+                chest: parseFloat(document.getElementById('chest').value) || null,
+                waist: parseFloat(document.getElementById('waist').value) || null,
+                shoulder: parseFloat(document.getElementById('shoulder').value) || null,
+                sleeveLength: parseFloat(document.getElementById('sleeveLength').value) || null,
+                armhole: parseFloat(document.getElementById('armhole').value) || null,
+                neck: parseFloat(document.getElementById('neck').value) || null,
+                hips: parseFloat(document.getElementById('hips').value) || null,
+                inseam: parseFloat(document.getElementById('inseam').value) || null,
+                thigh: parseFloat(document.getElementById('thigh').value) || null,
+                knee: parseFloat(document.getElementById('knee').value) || null,
+                measurementType: measurementType,
+                notes: document.getElementById('notes').value
+            };
+
+            try {
+                let response;
+                
+                if (editingId !== null) {
+                    response = await fetch(`${API_URL}/customers/${editingId}`, {
+                        method: 'PUT',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(customer)
+                    });
+                } else {
+                    response = await fetch(`${API_URL}/customers`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(customer)
+                    });
+                }
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Operation failed');
+                }
+
+                showAlert(editingId ? 'កែសម្រួលជោគជ័យ!' : 'បន្ថែមអតិថិជនជោគជ័យ!', 'success');
+                
+                this.reset();
+                editingId = null;
+                document.getElementById('submitBtn').textContent = 'រក្សាទុក';
+                document.getElementById('cancelBtn').style.display = 'none';
+                document.getElementById('formTitle').textContent = 'អតិថិជនថ្មី';
+                document.getElementById('typeBoth').checked = true;
+                document.getElementById('upperBodySection').classList.add('show');
+                document.getElementById('lowerBodySection').classList.add('show');
+                
+                fetchCustomers();
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('មានបញ្ហា: ' + error.message, 'error');
+            }
+        });
+
+        document.getElementById('cancelBtn').addEventListener('click', function() {
+            editingId = null;
+            document.getElementById('customerForm').reset();
+            document.getElementById('submitBtn').textContent = 'រក្សាទុក';
+            this.style.display = 'none';
+            document.getElementById('formTitle').textContent = 'អតិថិជនថ្មី';
+            document.getElementById('typeBoth').checked = true;
+            document.getElementById('upperBodySection').classList.add('show');
+            document.getElementById('lowerBodySection').classList.add('show');
+        });
+
+        async function viewCustomer(id) {
+            try {
+                const response = await fetch(`${API_URL}/customers/${id}`);
+                
+                if (!response.ok) {
+                    throw new Error('Customer not found');
+                }
+                
+                const c = await response.json();
+                const modal = document.getElementById('viewModal');
+                const modalBody = document.getElementById('modalBody');
+
+                // Detect actual measurement type
+                const hasUpper = c.chest || c.waist || c.shoulder || c.sleeveLength || c.neck || c.armhole;
+                const hasLower = c.hips || c.inseam || c.thigh || c.knee;
+                let actualType = 'both';
+                if (hasUpper && !hasLower) actualType = 'upper';
+                if (!hasUpper && hasLower) actualType = 'lower';
+                
+                const typeLabels = {
+                    'both': 'ទាំងពីរ',
+                    'upper': 'អាវ',
+                    'lower': 'ខោរ'
+                };
+
+                let html = `
+                    <div class="detail-section">
+                        <div class="detail-title">ព័ត៌មានផ្ទាល់ខ្លួន</div>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">លេខសម្គាល់</div>
+                                <div class="detail-value">#${c.id}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">ឈ្មោះ</div>
+                                <div class="detail-value">${c.customerName}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">ភេទ</div>
+                                <div class="detail-value">${c.gender}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">ទូរស័ព្ទ</div>
+                                <div class="detail-value">${c.phone}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">ប្រភេទទំហំ</div>
+                                <div class="detail-value">${typeLabels[actualType]}</div>
+                            </div>
+                            <div class="detail-item">
+                                <div class="detail-label">ចំនួនកម្ម៉ង់</div>
+                                <div class="detail-value">${c.totalOrders || 0}</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+
+                // Upper body section
+                if (hasUpper) {
+                    html += `
+                        <div class="detail-section">
+                            <div class="detail-title">ខ្នាតអាវ​​ (សង់ទីម៉ែត្រ)</div>
+                            <div class="detail-grid">
+                                ${c.chest ? `<div class="detail-item"><div class="detail-label">ទ្រូង</div><div class="detail-value">${c.chest} cm</div></div>` : ''}
+                                ${c.waist ? `<div class="detail-item"><div class="detail-label">រាង</div><div class="detail-value">${c.waist} cm</div></div>` : ''}
+                                ${c.shoulder ? `<div class="detail-item"><div class="detail-label">ស្មា</div><div class="detail-value">${c.shoulder} cm</div></div>` : ''}
+                                ${c.sleeveLength ? `<div class="detail-item"><div class="detail-label">សម្រុងដៃ</div><div class="detail-value">${c.sleeveLength} cm</div></div>` : ''}
+                                ${c.neck ? `<div class="detail-item"><div class="detail-label">សម្រុងខ្លួន</div><div class="detail-value">${c.neck} cm</div></div>` : ''}
+                                ${c.armhole ? `<div class="detail-item"><div class="detail-label">ដៃអាវ</div><div class="detail-value">${c.armhole} cm</div></div>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Lower body section
+                if (hasLower) {
+                    html += `
+                        <div class="detail-section">
+                            <div class="detail-title">ខ្នាតខោរ (សង់ទីម៉ែត្រ)</div>
+                            <div class="detail-grid">
+                                ${c.hips ? `<div class="detail-item"><div class="detail-label">ចង្កេះ</div><div class="detail-value">${c.hips} cm</div></div>` : ''}
+                                ${c.inseam ? `<div class="detail-item"><div class="detail-label">ត្រគាក</div><div class="detail-value">${c.inseam} cm</div></div>` : ''}
+                                ${c.thigh ? `<div class="detail-item"><div class="detail-label">សម្រុង</div><div class="detail-value">${c.thigh} cm</div></div>` : ''}
+                                ${c.knee ? `<div class="detail-item"><div class="detail-label">ទំហំជើង</div><div class="detail-value">${c.knee} cm</div></div>` : ''}
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Notes section
+                if (c.notes) {
+                    html += `
+                        <div class="detail-section">
+                            <div class="detail-title">កំណត់ចំណាំ</div>
+                            <div class="detail-item" style="width: 100%;">
+                                <div class="detail-value" style="font-size: 1.1rem;">${c.notes}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                // Record information section
+                html += `
+                    <div class="detail-section">
+                        <div class="detail-title">ព័ត៌មានកំណត់ត្រា</div>
+                        <div class="detail-grid">
+                            <div class="detail-item">
+                                <div class="detail-label">កាលបរិច្ឆេទបង្កើត</div>
+                                <div class="detail-value" style="font-size: 1.1rem;">${new Date(c.createdAt).toLocaleDateString('km-KH', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
+                            </div>
+                            ${c.updatedAt && c.updatedAt !== c.createdAt ? `
+                            <div class="detail-item">
+                                <div class="detail-label">កែសម្រួលចុងក្រោយ</div>
+                                <div class="detail-value" style="font-size: 1.1rem;">${new Date(c.updatedAt).toLocaleDateString('km-KH', {year: 'numeric', month: 'long', day: 'numeric'})}</div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+
+                modalBody.innerHTML = html;
+                modal.classList.add('active');
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('មានបញ្ហាក្នុងការផ្ទុកទិន្នន័យ', 'error');
+            }
+        }
+
+        async function editCustomer(id) {
+            try {
+                const response = await fetch(`${API_URL}/customers/${id}`);
+                
+                if (!response.ok) {
+                    throw new Error('Customer not found');
+                }
+                
+                const c = await response.json();
+
+                editingId = id;
+                document.getElementById('customerName').value = c.customerName;
+                document.getElementById('phone').value = c.phone;
+                document.getElementById('gender').value = c.gender;
+                document.getElementById('chest').value = c.chest || '';
+                document.getElementById('waist').value = c.waist || '';
+                document.getElementById('shoulder').value = c.shoulder || '';
+                document.getElementById('sleeveLength').value = c.sleeveLength || '';
+                document.getElementById('armhole').value = c.armhole || '';
+                document.getElementById('neck').value = c.neck || '';
+                document.getElementById('hips').value = c.hips || '';
+                document.getElementById('inseam').value = c.inseam || '';
+                document.getElementById('thigh').value = c.thigh || '';
+                document.getElementById('knee').value = c.knee || '';
+                document.getElementById('notes').value = c.notes || '';
+
+                // Set measurement type
+                const typeRadio = document.getElementById('type' + c.measurementType.charAt(0).toUpperCase() + c.measurementType.slice(1));
+                if (typeRadio) {
+                    typeRadio.checked = true;
+                    typeRadio.dispatchEvent(new Event('change'));
+                }
+
+                document.getElementById('submitBtn').textContent = 'កែសម្រួល';
+                document.getElementById('cancelBtn').style.display = 'block';
+                document.getElementById('formTitle').textContent = 'កែសម្រួលអតិថិជន';
+
+                document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('មានបញ្ហាក្នុងការផ្ទុកទិន្នន័យ', 'error');
+            }
+        }
+
+        async function deleteCustomer(id) {
+            if (!confirm('តើអ្នកប្រាកដជាចង់លុបអតិថិជននេះមែនទេ?')) {
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_URL}/customers/${id}`, {
+                    method: 'DELETE'
+                });
+
+                if (!response.ok) {
+                    throw new Error('Failed to delete customer');
+                }
+
+                showAlert('លុបអតិថិជនជោគជ័យ!', 'success');
+                fetchCustomers();
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('មានបញ្ហាក្នុងការលុប', 'error');
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('viewModal').classList.remove('active');
+        }
+
+        let searchTimeout;
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                fetchCustomers(e.target.value);
+            }, 500);
+        });
+
+        async function exportData() {
+            try {
+                const response = await fetch(`${API_URL}/export`);
+                const data = await response.json();
+                
+                const dataStr = JSON.stringify(data, null, 2);
+                const dataBlob = new Blob([dataStr], { type: 'application/json' });
+                const url = URL.createObjectURL(dataBlob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = `customers-${new Date().toISOString().split('T')[0]}.json`;
+                link.click();
+                URL.revokeObjectURL(url);
+                
+                showAlert('នាំចេញទិន្នន័យជោគជ័យ!', 'success');
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('មានបញ្ហាក្នុងការនាំចេញ', 'error');
+            }
+        }
+
+        document.getElementById('viewModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Initialize
+        fetchCustomers();
+    </script>
+</body>
+</html>
